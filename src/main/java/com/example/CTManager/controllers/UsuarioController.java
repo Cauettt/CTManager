@@ -23,7 +23,7 @@ public class UsuarioController {
         return usuarioService.criarUsuario(usuario);
     }
 
-    @GetMapping("/id")
+    @GetMapping("/{id}")
     private Optional<UsuarioDTO> buscarUsuario(@PathVariable Long id){
         return usuarioService.buscarPorId(id);
     }
@@ -33,12 +33,12 @@ public class UsuarioController {
         return usuarioService.listarUsuarios();
     }
 
-    @PutMapping("/id")
+    @PutMapping("/{id}")
     private UsuarioDTO updateUsuario(@PathVariable Long id, @RequestBody Usuario usuario){
         return usuarioService.updateUsuario(id,usuario);
     }
 
-    @DeleteMapping("/id")
+    @DeleteMapping("/{id}")
     private ResponseEntity<Void> excluirUsuario(@PathVariable Long id){
         usuarioService.excluirUsuario(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
