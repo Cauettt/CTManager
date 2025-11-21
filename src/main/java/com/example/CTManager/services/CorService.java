@@ -24,7 +24,7 @@ public class CorService {
     }
 
     public List<Cor> listarCorPorImagem(Long imagemId){
-        return corRepository.findCorByImagem(imagemId);
+        return corRepository.findCorByImagem_id(imagemId);
     }
 
     public List<Cor> listarCores(){

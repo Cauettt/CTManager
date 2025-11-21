@@ -32,7 +32,7 @@ public class ImagemService {
     }
 
     public Imagem atualizarImagem(Long idChat, Imagem imagemNova){
-        Imagem imagemAtual = imagemRepository.findImageByChat(idChat)
+        Imagem imagemAtual = imagemRepository.findImagemByChat_id(idChat)
                 .orElseThrow(() -> new RuntimeException("Nenhuma imagem encontrada para o chat "+idChat));
 
         Chat chat = chatRepository.findById(idChat)

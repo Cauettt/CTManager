@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface ImagemRepository extends JpaRepository<Imagem, Long> {
-    Optional<Imagem> findImageByChat(Long chatId);
+    Optional<Imagem> findImagemByChat_id(Long chatId);
 }

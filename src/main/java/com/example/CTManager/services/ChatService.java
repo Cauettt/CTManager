@@ -24,7 +24,7 @@ public class ChatService {
     }
 
     public List<Chat> listarChatsPorUsuario(Long usuarioId){
-        return chatRepository.findChatByUser(usuarioId);
+        return chatRepository.findChatByUsuario_id(usuarioId);
     }
 
     public List<Chat> listarChats(){
