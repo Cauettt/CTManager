@@ -25,7 +25,7 @@ public class CorController {
     private ImagemService imagemService;
 
     @GetMapping("chat/{id}")
-    private List<CorDTO> listarCoresporChat(@PathVariable Long idChat){
+    private List<CorDTO> listarCoresporChat(@PathVariable("id") Long idChat){
             return corService.listarCorPorChat(idChat);
     }
 
