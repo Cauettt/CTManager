@@ -1,5 +1,6 @@
 package com.example.CTManager.services;
 
+import com.example.CTManager.dto.ChatDTO;
 import com.example.CTManager.entities.Chat;
 import com.example.CTManager.entities.Usuario;
 import com.example.CTManager.repositories.ChatRepository;
@@ -19,8 +20,8 @@ public class ChatService {
     @Autowired
     public UsuarioRepository usuarioRepository;
 
-    public Chat criarChat(Chat novoChat){
-        return chatRepository.save(novoChat);
+    public Chat criarChat(ChatDTO novoChat){
+        return chatRepository.save(fromDTO(novoChat));
     }
 
     public List<Chat> listarChatsPorUsuario(Long usuarioId){
@@ -35,18 +36,23 @@ public class ChatService {
         return chatRepository.findById(idChat);
     }
 
-    public Chat atualizarChat(Long idChat, Long idUsuario){
+    public Chat atualizarChat(Long idChat, ChatDTO chatDTO){
         Chat chatAtual = chatRepository.findById(idChat)
                 .orElseThrow(() -> new RuntimeException("Chat não encontrado"));
-        Usuario usuarioNovo = usuarioRepository.findById(idUsuario)
-                .orElseThrow(() -> new RuntimeException("Nenhum usuário com o id "+idUsuario+" encontrado"));
-
-        chatAtual.setUsuario(usuarioNovo);
+        Chat chatAtualizado = fromDTO(chatDTO);
+        chatAtual.setUsuario(chatAtualizado.getUsuario());
 
         return chatRepository.save(chatAtual);
     }
 
     public void deletarChat(Long id){
         chatRepository.deleteById(id);
+    }
+
+    private Chat fromDTO(ChatDTO chatDTO){
+        Usuario user = usuarioRepository.findById(chatDTO.getUsuario_id())
+                .orElseThrow(() -> new RuntimeException());
+
+        return new Chat(chatDTO.getId(), user);
     }
 }

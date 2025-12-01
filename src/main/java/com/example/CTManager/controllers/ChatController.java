@@ -1,5 +1,6 @@
 package com.example.CTManager.controllers;
 
+import com.example.CTManager.dto.ChatDTO;
 import com.example.CTManager.entities.Chat;
 import com.example.CTManager.entities.Usuario;
 import com.example.CTManager.services.ChatService;
@@ -19,7 +20,7 @@ public class ChatController {
     private ChatService chatService;
 
     @PostMapping
-    private Chat criarChat(@RequestBody  Chat chat){
+    private Chat criarChat(@RequestBody  ChatDTO chat){
         return chatService.criarChat(chat);
     }
 
@@ -41,8 +42,8 @@ public class ChatController {
     }
 
     @PutMapping("/{id}")
-    private ResponseEntity<Chat> atualizarChat(@PathVariable Long chatId, @RequestBody Long idUsuario){
-        Chat novoChat = chatService.atualizarChat(chatId,idUsuario);
+    private ResponseEntity<Chat> atualizarChat(@PathVariable Long chatId, @RequestBody ChatDTO chatDTO){
+        Chat novoChat = chatService.atualizarChat(chatId,chatDTO);
         return ResponseEntity.ok(novoChat);
     }
 
