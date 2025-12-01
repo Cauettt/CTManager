@@ -29,7 +29,7 @@ public class CorService {
         Imagem img = imagemRepository.findImagemByChat_id(idChat)
                 .orElseThrow(() ->new RuntimeException("Nenumas imagem encontrada para o chat de ID "+idChat));
 
-        return corRepository.findCorByImagem_id(img.getId())
+        return corRepository.findByImagem_Chat_Id(img.getId())
                 .stream()
                 .map(this::toDTO)
                 .toList();
