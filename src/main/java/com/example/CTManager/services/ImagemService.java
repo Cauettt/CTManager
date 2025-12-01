@@ -39,7 +39,7 @@ public class ImagemService {
 
     public Imagem atualizarImagem(Long idImagem, ImagemDTO imagemNova){
         Imagem imagemAtual = imagemRepository.findById(idImagem)
-                .orElseThrow(() -> new RuntimeException("Nenhuma imagem encontrada para o chat "+idChat));
+                .orElseThrow(() -> new RuntimeException("Nenhuma imagem encontrada para o chat "+idImagem));
         Imagem imagemAtualizada = fromDTO(imagemNova);
 
         imagemAtual.setChat(imagemAtualizada.getChat());
