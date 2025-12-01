@@ -15,32 +15,32 @@ import java.util.List;
 public class ImagemController {
 
     @Autowired
-    private ImagemService imagemService;
+    public ImagemService imagemService;
 
     @GetMapping
-    private List<Imagem> lsitarImagens(){
+    public List<Imagem> lsitarImagens(){
         return imagemService.listarImagens();
     }
 
     @GetMapping("/{id}")
-    private ResponseEntity<Imagem> buscarImagem(@PathVariable("id") Long id){
+    public ResponseEntity<Imagem> buscarImagem(@PathVariable("id") Long id){
         return imagemService.mostrarImagemPorId(id)
                 .map(imagem -> new ResponseEntity<>(imagem,HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping
-    private Imagem criarImagem(@RequestBody ImagemDTO imagem){
+    public Imagem criarImagem(@RequestBody ImagemDTO imagem){
         return  imagemService.criarImagem(imagem);
     }
 
     @PutMapping("/{id}")
-    private Imagem atualizarImagem(@PathVariable("id") Long id, @RequestBody ImagemDTO imagem){
+    public Imagem atualizarImagem(@PathVariable("id") Long id, @RequestBody ImagemDTO imagem){
         return imagemService.atualizarImagem(id, imagem);
     }
 
     @DeleteMapping("/{id}")
-    private ResponseEntity<Void> deletarImagem(@PathVariable Long id){
+    public ResponseEntity<Void> deletarImagem(@PathVariable Long id){
         imagemService.deletarImagem(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

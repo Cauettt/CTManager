@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface CorRepository extends JpaRepository<Cor, Long> {
-    List<Cor> findCorByImagem_id(Long imagemId);
+    List<Cor> findByImagem_Chat_Id(Long chatId);
 }

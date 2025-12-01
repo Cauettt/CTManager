@@ -4,9 +4,11 @@ import com.example.CTManager.dto.UsuarioDTO;
 import com.example.CTManager.entities.Usuario;
 import com.example.CTManager.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -47,4 +49,21 @@ public class UsuarioService {
             return toDto(usuarioRepository.save(usuario));
     }).orElseThrow(() -> new RuntimeException("cliente não existe"));
     }
+
+    public ResponseEntity<?> login(String email, String senha) {
+
+        return usuarioRepository.findByEmail(email)
+                .map(usuario -> {
+                    if (!usuario.getSenha().equals(senha)) {
+                        return ResponseEntity.status(401).body(Map.of(
+                                "message", "Senha incorreta"
+                        ));
+                    }
+
+                    return ResponseEntity.ok(toDto(usuario));
+                })
+                .orElseGet(() -> ResponseEntity.status(404).body(Map.of(
+                        "message", "Usuário não encontrado"
+                )));
+}
 }

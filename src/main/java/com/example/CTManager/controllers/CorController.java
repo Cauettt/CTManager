@@ -19,28 +19,28 @@ import java.util.List;
 public class CorController {
 
     @Autowired
-    private CorService corService;
+    public CorService corService;
 
     @Autowired
-    private ImagemService imagemService;
+    public ImagemService imagemService;
 
     @GetMapping("chat/{id}")
-    private List<CorDTO> listarCoresporChat(@PathVariable("id") Long idChat){
+    public List<CorDTO> listarCoresporChat(@PathVariable("id") Long idChat){
             return corService.listarCorPorChat(idChat);
     }
 
     @PostMapping
-    private Cor criarCor(@RequestBody CorDTO cor){
+    public Cor criarCor(@RequestBody CorDTO cor){
         return corService.salvarCor(cor);
     }
 
     @PutMapping("/{id}")
-    private Cor atualizarCor(@PathVariable Long corId, @PathParam("imagemId") Long imagemId, @RequestBody CorDTO cor){
+    public Cor atualizarCor(@PathVariable Long corId, @PathParam("imagemId") Long imagemId, @RequestBody CorDTO cor){
         return corService.atualizarCor(corId,imagemId,cor);
     }
 
     @DeleteMapping("/{id}")
-    private ResponseEntity<Void> deletarCor(@PathVariable Long id){
+    public ResponseEntity<Void> deletarCor(@PathVariable Long id){
         corService.deletarCor(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

@@ -17,38 +17,38 @@ import java.util.Optional;
 public class ChatController {
 
     @Autowired
-    private ChatService chatService;
+    public ChatService chatService;
 
     @PostMapping
-    private Chat criarChat(@RequestBody  ChatDTO chat){
+    public Chat criarChat(@RequestBody  ChatDTO chat){
         return chatService.criarChat(chat);
     }
 
     @GetMapping("/usuario/{userId}")
-    private List<Chat> buscarChatPorUsuario(@PathVariable Long userId){
+    public List<Chat> buscarChatPorUsuario(@PathVariable Long userId){
         return chatService.listarChatsPorUsuario(userId);
     }
 
     @GetMapping("/{id}")
-    private ResponseEntity<Chat> buscarChatPorId(@PathVariable Long chatId){
+    public ResponseEntity<Chat> buscarChatPorId(@PathVariable Long chatId){
         return chatService.mostarChatPorId(chatId)
                 .map(chat -> new ResponseEntity<>(chat, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @GetMapping
-    private List<Chat> lisarChats(){
+    public List<Chat> listarChats(){
         return chatService.listarChats();
     }
 
     @PutMapping("/{id}")
-    private ResponseEntity<Chat> atualizarChat(@PathVariable Long chatId, @RequestBody ChatDTO chatDTO){
-        Chat novoChat = chatService.atualizarChat(chatId,chatDTO);
+    public ResponseEntity<Chat> atualizarChat(@PathVariable Long id, @RequestBody ChatDTO chatDTO){
+        Chat novoChat = chatService.atualizarChat(id,chatDTO);
         return ResponseEntity.ok(novoChat);
     }
 
     @DeleteMapping("/{id}")
-    private ResponseEntity<Void> excluirChat(@PathVariable Long id){
+    public ResponseEntity<Void> excluirChat(@PathVariable Long id){
         chatService.deletarChat(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
