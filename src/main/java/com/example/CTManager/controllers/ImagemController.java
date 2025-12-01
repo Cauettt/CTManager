@@ -1,5 +1,6 @@
 package com.example.CTManager.controllers;
 
+import com.example.CTManager.dto.ImagemDTO;
 import com.example.CTManager.entities.Imagem;
 import com.example.CTManager.services.ImagemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,12 +30,12 @@ public class ImagemController {
     }
 
     @PostMapping
-    private Imagem criarImagem(@RequestBody Imagem imagem){
+    private Imagem criarImagem(@RequestBody ImagemDTO imagem){
         return  imagemService.criarImagem(imagem);
     }
 
-    @PutMapping("/{idChat}")
-    private Imagem atualizarImagem(@PathVariable("idChat") Long id, @RequestBody Imagem imagem){
+    @PutMapping("/{id}")
+    private Imagem atualizarImagem(@PathVariable("id") Long id, @RequestBody ImagemDTO imagem){
         return imagemService.atualizarImagem(id, imagem);
     }
 

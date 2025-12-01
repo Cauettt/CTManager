@@ -1,5 +1,6 @@
 package com.example.CTManager.services;
 
+import com.example.CTManager.dto.ImagemDTO;
 import com.example.CTManager.entities.Chat;
 import com.example.CTManager.entities.Imagem;
 import com.example.CTManager.repositories.ChatRepository;
@@ -7,6 +8,7 @@ import com.example.CTManager.repositories.ImagemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.awt.*;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,8 +21,8 @@ public class ImagemService {
     @Autowired
     public ChatRepository chatRepository;
 
-    public Imagem criarImagem(Imagem novaImagem){
-        return  imagemRepository.save(novaImagem);
+    public Imagem criarImagem(ImagemDTO novaImagem){
+        return  imagemRepository.save(fromDTO(novaImagem));
     }
 
     public List<Imagem> listarImagens(){
@@ -35,20 +37,25 @@ public class ImagemService {
         return  imagemRepository.findImagemByChat_id(idChat);
     }
 
-    public Imagem atualizarImagem(Long idChat, Imagem imagemNova){
-        Imagem imagemAtual = imagemRepository.findImagemByChat_id(idChat)
+    public Imagem atualizarImagem(Long idImagem, ImagemDTO imagemNova){
+        Imagem imagemAtual = imagemRepository.findById(idImagem)
                 .orElseThrow(() -> new RuntimeException("Nenhuma imagem encontrada para o chat "+idChat));
+        Imagem imagemAtualizada = fromDTO(imagemNova);
 
-        Chat chat = chatRepository.findById(idChat)
-                .orElseThrow(() -> new RuntimeException("Nenhum chat encontrado com o id "+idChat));
-
-        imagemAtual.setChat(chat);
-        imagemAtual.setPath(imagemNova.getPath());
+        imagemAtual.setChat(imagemAtualizada.getChat());
+        imagemAtual.setPath(imagemAtualizada.getPath());
         return imagemRepository.save(imagemAtual);
     }
 
     public void deletarImagem(Long id){
         imagemRepository.deleteById(id);
+    }
+
+    private Imagem fromDTO(ImagemDTO imagem){
+        Chat chat = chatRepository.findById(imagem.getChatId())
+                .orElseThrow(() -> new RuntimeException("Nenhum chat encontrado para o id "+imagem.getChatId()));
+
+        return new Imagem(imagem.getId(),imagem.getPath(),chat);
     }
 
 }
